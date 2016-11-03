@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "keywords": [
-    ""
+    "cedr", "html", "bem"
   ],
   "repository": "antitim/cedr",
   "scripts": {
