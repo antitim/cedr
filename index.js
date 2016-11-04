@@ -7,7 +7,7 @@ const Mustache = require('mustache');
  *
  * @type {string}
  */
-const defaultBlockTemplate = '<{{tagName}} class="{{className}}">{{{ content }}}</{{tagName}}>';
+const defaultBlockTemplate = '<{{tagName}} class="{{className}}"{{{attrs}}}>{{{ content }}}</{{tagName}}>';
 
 /**
  * Список имеющихся блоков
@@ -41,16 +41,43 @@ function renderNode (node) {
       content: renderNode(node.content),
       className: () => {
         let className = node.block;
+        let blockName = className;
 
         if (node.element) {
-          className = className + '__' + node.element;
+          className = blockName + '__' + node.element;
         }
 
         if (node.className) {
           className = className + ' ' + node.className;
         }
 
+        if (node.mods) {
+          for (let key in node.mods) {
+            let value = node.mods[key];
+
+            if (typeof value === 'boolean') {
+              className = className + ' ' + blockName + '_' + key;
+            } else {
+              className = className + ' ' + blockName + '_' + key + '_' + value;
+            }
+          }
+        }
+
         return className;
+      },
+      attrs: () => {
+        let attrs;
+
+        if (node.attrs) {
+          attrs = '';
+
+          for (let key in node.attrs) {
+            let value = node.attrs[key];
+            attrs = attrs + ' ' + key + '="' + value + '"';
+          }
+        }
+
+        return attrs;
       }
     });
 

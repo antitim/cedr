@@ -48,6 +48,30 @@ describe('Cedr', () => {
     html.should.equal('<span class="page__header"></span>');
   });
 
+  it('block and modifications without library', () => {
+    let html = cedr({
+      block: 'page',
+      mods: {
+        main: true,
+        size: 'big'
+      }
+    });
+
+    html.should.equal('<div class="page page_main page_size_big"></div>');
+  });
+
+  it('block and attributes without library', () => {
+    let html = cedr({
+      block: 'page',
+      attrs: {
+        target: '_blank',
+        'data-bar': 'foo'
+      }
+    });
+
+    html.should.equal('<div class="page" target="_blank" data-bar="foo"></div>');
+  });
+
   it('block with library', () => {
     let html = cedr({
       block: 'page',
