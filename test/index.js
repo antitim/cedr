@@ -60,6 +60,18 @@ describe('Cedr', () => {
     html.should.equal('<div class="page page_main page_size_big"></div>');
   });
 
+  it('element and modifications without library', () => {
+    let html = cedr({
+      block: 'page',
+      element: 'header',
+      mods: {
+        main: true
+      }
+    });
+
+    html.should.equal('<div class="page__header page__header_main"></div>');
+  });
+
   it('block and attributes without library', () => {
     let html = cedr({
       block: 'page',

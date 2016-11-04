@@ -25,6 +25,14 @@ Before you can use cedr strongly recommended to read [this methodolgy](https://e
 {
   block: 'menu', // required field
   element: 'item', // is filled if the current node is an element
+  mods: {
+    key1: 'value',
+    key2: true
+  }, // contains a hash of the modifier block
+  attrs: {
+    target: '_blank',
+    'data-bar': 'foo'
+  }, // contains block attributes
   tagName: 'span', // if you do not specify, it will be `div` by default
   className: 'item-prop', //additional class name
   content: Node // contains the node
@@ -42,10 +50,17 @@ Example of `page`:
     {
       block: 'page',
       element: 'header',
+      mods: {
+        size: 'big',
+        main: true
+      }
       content: 'Yeah!'
     },
     {
       block: 'panel',
+      attrs: {
+        'data-bar': 'foo'
+      }
       someData: [1, 2, 3],
       content: [
         {
@@ -65,8 +80,8 @@ Result for this page without using library of block:
 
 ```HTML
 <div class="page">
-  <div class="page__header">Yeah!</div>
-  <div class="panel">
+  <div class="page__header page__header_size_big page__header_main">Yeah!</div>
+  <div class="panel" data-bar="foo">
     <span class="text item-prop"></span>
     Good
   </div>

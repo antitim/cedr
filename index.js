@@ -40,27 +40,28 @@ function renderNode (node) {
       tagName: node.tagName || 'div',
       content: renderNode(node.content),
       className: () => {
-        let className = node.block;
-        let blockName = className;
+        let baseName = node.block;
 
         if (node.element) {
-          className = blockName + '__' + node.element;
+          baseName = baseName + '__' + node.element;
         }
 
-        if (node.className) {
-          className = className + ' ' + node.className;
-        }
+        let className = baseName;
 
         if (node.mods) {
           for (let key in node.mods) {
             let value = node.mods[key];
 
             if (typeof value === 'boolean') {
-              className = className + ' ' + blockName + '_' + key;
+              className = className + ' ' + baseName + '_' + key;
             } else {
-              className = className + ' ' + blockName + '_' + key + '_' + value;
+              className = className + ' ' + baseName + '_' + key + '_' + value;
             }
           }
+        }
+
+        if (node.className) {
+          className = className + ' ' + node.className;
         }
 
         return className;
