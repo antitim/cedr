@@ -4,6 +4,8 @@
 
 ## About
 
+Generates the html page from the structure presented in the form of a js object. 
+In the description of the structure of the used blocks that are in the description of library blocks.
 Inspired by [BEM](https://en.bem.info/) and [bem-xjst](https://github.com/bem/bem-xjst)
 Before you can use `cedr` strongly recommended to read [this methodolgy](https://en.bem.info/methodology/quick-start/)
 
