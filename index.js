@@ -17,6 +17,15 @@ const defaultBlockTemplate = '<{{tagName}} class="{{className}}"{{{attrs}}}>{{{ 
 let library;
 
 /**
+ * Класс контента для переопределения метода toString у Array
+ */
+class Contents extends Array {
+  toString () {
+    return this.join('');
+  }
+}
+
+/**
  * Функция рекурсивно рендерит узлы страницы
  *
  * @param node {Object} Корневой узел
@@ -34,7 +43,7 @@ function renderNode (node) {
   }
 
   // Блок
-  if (node.block) {
+  if (node.constructor === Object && node.block) {
     // Формируем контекст
     let context = Object.assign({}, node, {
       tagName: node.tagName || 'div',
@@ -99,10 +108,10 @@ function renderNode (node) {
   }
 
   // Список узлов
-  if (typeof node === 'object') {
-    var html = '';
+  if (node.constructor === Array) {
+    var html = new Contents();
     for (let i in node) {
-      html = html + renderNode(node[i]);
+      html.push(renderNode(node[i]));
     }
 
     return html;

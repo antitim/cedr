@@ -14,6 +14,11 @@ let library = {
     templates: {
       'text': '<p class="{{ className }}">{{{ content }}}</p>'
     }
+  },
+  'tab': {
+    templates: {
+      'tab': '<ul class="{{ className }}">{{#content}}<li>{{{.}}}</li>{{/content}}</ul>'
+    }
   }
 };
 
@@ -112,5 +117,17 @@ describe('Cedr', () => {
     }, library);
 
     html.should.equal('<!DOCTYPE html><html><head></head><body class="page"><p class="text">text</p><div class="page__header">This is Header: Yeah!</div></body></html>');
+  });
+
+  it('block with array content with library', () => {
+    let html = cedr({
+      block: 'tab',
+      content: [
+        'text',
+        'text2'
+      ]
+    }, library);
+
+    html.should.equal('<ul class="tab"><li>text</li><li>text2</li></ul>');
   });
 });
