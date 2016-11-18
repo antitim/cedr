@@ -9,6 +9,11 @@ In the description of the structure of the used blocks that are in the descripti
 Inspired by [BEM](https://en.bem.info/) and [bem-xjst](https://github.com/bem/bem-xjst)
 Before you can use `cedr` strongly recommended to read [this methodolgy](https://en.bem.info/methodology/quick-start/)
 
+Also may interesting:
+- [gulp-cedr](https://github.com/antitim/gulp-cedr)
+- [cedr-library](https://github.com/antitim/cedr-library)
+- [cedr-deps](https://github.com/antitim/cedr-deps)
+
 ## Installation
 
 ```sh
@@ -55,6 +60,56 @@ cedr(page);
 // Return '<div class="page"><div class="text">text</div><div class="page__header">Yeah!</div></div>'
 
 ```
+Example with [express](http://expressjs.com/)
+
+```js
+'use strict'
+
+const cedr = require('cedr');
+const express = require('express');
+
+const app = express();
+
+const library = {
+  'page': {
+    templates: {
+      'page': '<!DOCTYPE html><html><head></head><body class="{{ className }}">{{{ content }}}</body></html>',
+      '__header': '<div class="{{ className }}">This is Header: {{{ content }}}</div>'
+    }
+  },
+  'text': {
+    templates: {
+      'text': '<p class="{{ className }}">{{{ content }}}</p>'
+    }
+  }
+}
+
+app.get('/', function (req, res) {
+
+  let page = {
+    block: 'page',
+    content: [
+      {
+        block: 'text',
+        content: 'text'
+      },
+      {
+        block: 'page',
+        element: 'header',
+        content: 'Yeah!'
+      }
+    ]
+  };
+
+  res.send(cedr(page, library));
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
+```
+
+
 ## API
 cedr can be called with or without library of blocks.
 
